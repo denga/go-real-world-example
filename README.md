@@ -122,15 +122,15 @@ go test github.com/denga/go-real-world-example/internal/...
 To run tests for a specific package:
 ```
 go test github.com/denga/go-real-world-example/internal/util
-go test git.homelab.lan/denga/go-real-world-example/internal/auth
-go test git.homelab.lan/denga/go-real-world-example/internal/db
-go test git.homelab.lan/denga/go-real-world-example/internal/middleware
-go test git.homelab.lan/denga/go-real-world-example/internal/handlers
+go test github.com/denga/go-real-world-example/internal/auth
+go test github.com/denga/go-real-world-example/internal/db
+go test github.com/denga/go-real-world-example/internal/middleware
+go test github.com/denga/go-real-world-example/internal/handlers
 ```
 
 To run tests with verbose output:
 ```
-go test -v git.homelab.lan/denga/go-real-world-example/internal/...
+go test -v github.com/denga/go-real-world-example/internal/...
 ```
 
 ### Continuous Integration
