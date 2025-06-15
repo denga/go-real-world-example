@@ -8,6 +8,8 @@ on:
 
 jobs:
   test:
+    env:
+      RUNNER_TOOL_CACHE: /toolcache # Runner Tool Cache
     name: Run Tests
     runs-on: ubuntu-latest
 
