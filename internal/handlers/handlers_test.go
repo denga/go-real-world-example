@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"git.homelab.lan/denga/go-real-world-example/api"
-	"git.homelab.lan/denga/go-real-world-example/internal/auth"
-	"git.homelab.lan/denga/go-real-world-example/internal/db"
-	"git.homelab.lan/denga/go-real-world-example/internal/middleware"
+	"github.com/denga/go-real-world-example/api"
+	"github.com/denga/go-real-world-example/internal/auth"
+	"github.com/denga/go-real-world-example/internal/db"
+	"github.com/denga/go-real-world-example/internal/middleware"
 )
 
 // setupTestHandler creates a new Handler with a test database and auth config

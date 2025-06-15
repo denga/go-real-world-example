@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"git.homelab.lan/denga/go-real-world-example/internal/auth"
+	"github.com/denga/go-real-world-example/internal/auth"
 )
 
 // contextKey is a custom type for context keys to avoid collisions

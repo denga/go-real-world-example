@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"git.homelab.lan/denga/go-real-world-example/internal/auth"
+	"github.com/denga/go-real-world-example/internal/auth"
 )
 
 func TestAuth(t *testing.T) {

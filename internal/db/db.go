@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"git.homelab.lan/denga/go-real-world-example/api"
+	"github.com/denga/go-real-world-example/api"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -22,13 +22,13 @@ type InternalUser struct {
 
 // InMemoryDB is a simple in-memory database implementation
 type InMemoryDB struct {
-	users     map[string]*InternalUser       // key: email
-	usernames map[string]string              // key: username, value: email
-	articles  map[string]*api.Article        // key: slug
+	users     map[string]*InternalUser        // key: email
+	usernames map[string]string               // key: username, value: email
+	articles  map[string]*api.Article         // key: slug
 	comments  map[string]map[int]*api.Comment // key: article slug, value: map of comments by ID
-	follows   map[string]map[string]bool     // key: follower username, value: map of followed usernames
-	favorites map[string]map[string]bool     // key: article slug, value: map of usernames who favorited
-	tags      map[string]bool                // set of unique tags
+	follows   map[string]map[string]bool      // key: follower username, value: map of followed usernames
+	favorites map[string]map[string]bool      // key: article slug, value: map of usernames who favorited
+	tags      map[string]bool                 // set of unique tags
 	mutex     sync.RWMutex
 }
 

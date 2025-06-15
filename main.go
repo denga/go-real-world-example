@@ -1,13 +1,16 @@
+//go:generate npm ci --prefix frontend
+//go:generate npm run build --prefix frontend
+
 package main
 
 import (
 	"embed"
 	"fmt"
-	"git.homelab.lan/denga/go-real-world-example/api"
-	"git.homelab.lan/denga/go-real-world-example/internal/auth"
-	"git.homelab.lan/denga/go-real-world-example/internal/db"
-	"git.homelab.lan/denga/go-real-world-example/internal/handlers"
-	"git.homelab.lan/denga/go-real-world-example/internal/middleware"
+	"github.com/denga/go-real-world-example/api"
+	"github.com/denga/go-real-world-example/internal/auth"
+	"github.com/denga/go-real-world-example/internal/db"
+	"github.com/denga/go-real-world-example/internal/handlers"
+	"github.com/denga/go-real-world-example/internal/middleware"
 	iofs "io/fs"
 	"log"
 	"net/http"

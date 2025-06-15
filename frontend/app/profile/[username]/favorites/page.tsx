@@ -18,7 +18,7 @@ export default async function ProfileFavoritesPage({ params }: { params: Promise
   const mockProfile = {
     username: resolvedParams.username,
     bio: "I work at statefarm",
-    image: "https://via.placeholder.com/100",
+    image: "https://picsum.photos/id/100/300/200",
     following: false
   };
 
@@ -30,7 +30,7 @@ export default async function ProfileFavoritesPage({ params }: { params: Promise
       description: "A deep dive into the Next.js App Router",
       author: {
         username: "alexsmith",
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-05",
       favorited: true,
@@ -43,7 +43,7 @@ export default async function ProfileFavoritesPage({ params }: { params: Promise
       description: "Learn how to use Tailwind CSS effectively",
       author: {
         username: "janedoe",
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-01",
       favorited: true,

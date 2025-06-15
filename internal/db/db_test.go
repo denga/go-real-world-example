@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"git.homelab.lan/denga/go-real-world-example/api"
+	"github.com/denga/go-real-world-example/api"
 )
 
 func TestUserOperations(t *testing.T) {

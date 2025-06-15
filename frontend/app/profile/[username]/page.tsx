@@ -18,7 +18,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
   const mockProfile = {
     username: resolvedParams.username,
     bio: "I work at statefarm",
-    image: "https://via.placeholder.com/100",
+    image: "https://picsum.photos/id/100/300/200",
     following: false
   };
 
@@ -30,7 +30,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
       description: "A comprehensive guide to React Hooks",
       author: {
         username: resolvedParams.username,
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-15",
       favorited: false,
@@ -43,7 +43,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
       description: "Learn the basics of Go programming language",
       author: {
         username: resolvedParams.username,
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-10",
       favorited: true,

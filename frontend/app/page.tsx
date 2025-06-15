@@ -11,7 +11,7 @@ export default function Home() {
       description: "A comprehensive guide to React Hooks",
       author: {
         username: "johndoe",
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-15",
       favorited: false,
@@ -24,7 +24,7 @@ export default function Home() {
       description: "Learn the basics of Go programming language",
       author: {
         username: "janedoe",
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-10",
       favorited: true,
@@ -37,7 +37,7 @@ export default function Home() {
       description: "A deep dive into the Next.js App Router",
       author: {
         username: "alexsmith",
-        image: "https://via.placeholder.com/40"
+        image: "https://picsum.photos/id/40/300/200"
       },
       createdAt: "2023-06-05",
       favorited: false,

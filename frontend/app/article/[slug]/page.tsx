@@ -27,7 +27,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     author: {
       username: "johndoe",
       bio: "I work at statefarm",
-      image: "https://via.placeholder.com/40",
+      image: "https://picsum.photos/id/40/300/200",
       following: false
     }
   };
@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       body: "This is a great article!",
       author: {
         username: "janedoe",
-        image: "https://via.placeholder.com/40",
+        image: "https://picsum.photos/id/40/300/200",
       }
     },
     {
@@ -49,7 +49,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       body: "I learned a lot from this, thanks for sharing!",
       author: {
         username: "alexsmith",
-        image: "https://via.placeholder.com/40",
+        image: "https://picsum.photos/id/40/300/200",
       }
     }
   ];

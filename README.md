@@ -2,6 +2,8 @@
 
 This project is a real-world example of a RESTful API implementation in Go, following the [RealWorld](https://github.com/gothinkster/realworld) API specification. It demonstrates how to build a backend application using modern Go practices and libraries, along with a modern frontend using Next.js and chadcn UI.
 
+The application is a Medium.com clone called "Conduit" that allows users to create articles, follow authors, and favorite articles. The backend serves the API endpoints and also embeds and serves the frontend static files.
+
 ## Features
 
 ### Backend
@@ -16,10 +18,19 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 
 ### Frontend
 - Built with [Next.js](https://nextjs.org/) and [chadcn UI](https://ui.shadcn.com/)
-- Dark mode support
+- Dark mode support with theme toggle
 - Mobile responsive design
 - Integration with backend API
 - Static export that can be embedded in the backend binary
+- Client-side authentication with JWT tokens stored in localStorage
+- React context for managing authentication state
+- Complete routing implementation:
+  - Home page (`/`)
+  - Authentication pages (`/login`, `/register`)
+  - Article pages (`/article/[slug]`)
+  - Editor pages (`/editor`, `/editor/[slug]`)
+  - Profile pages (`/profile/[username]`, `/profile/[username]/favorites`)
+  - Settings page (`/settings`)
 
 ## Project Structure
 
@@ -31,11 +42,24 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 │   └── gen.go            # Go generate directive
 ├── frontend/             # Frontend application
 │   ├── app/              # Next.js app directory
+│   │   ├── article/      # Article pages
+│   │   ├── editor/       # Editor pages
+│   │   ├── login/        # Login page
+│   │   ├── profile/      # Profile pages
+│   │   ├── register/     # Register page
+│   │   ├── settings/     # Settings page
+│   │   ├── layout.tsx    # Root layout with providers
+│   │   └── page.tsx      # Home page
 │   ├── components/       # React components
+│   │   ├── nav.tsx       # Navigation component
 │   │   ├── theme-provider.tsx  # Dark mode provider
 │   │   ├── theme-toggle.tsx    # Dark mode toggle
 │   │   └── ui/           # UI components from shadcn/ui
+│   ├── contexts/         # React contexts
+│   │   └── auth-context.tsx  # Authentication context
 │   ├── lib/              # Utility functions and API client
+│   │   ├── api.ts        # API client with typed interfaces
+│   │   └── auth.ts       # Authentication utilities
 │   ├── public/           # Static assets
 │   ├── next.config.ts    # Next.js configuration
 │   └── package.json      # Frontend dependencies
@@ -72,7 +96,7 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 
 1. Clone the repository:
    ```
-   git clone git.homelab.lan/denga/go-real-world-example.git
+   git clone github.com/denga/go-real-world-example.git
    cd go-real-world-example
    ```
 
@@ -94,12 +118,12 @@ The server will start on port 8080 by default. You can change the port by settin
 
 To run all tests:
 ```
-go test git.homelab.lan/denga/go-real-world-example/internal/...
+go test github.com/denga/go-real-world-example/internal/...
 ```
 
 To run tests for a specific package:
 ```
-go test git.homelab.lan/denga/go-real-world-example/internal/util
+go test github.com/denga/go-real-world-example/internal/util
 go test git.homelab.lan/denga/go-real-world-example/internal/auth
 go test git.homelab.lan/denga/go-real-world-example/internal/db
 go test git.homelab.lan/denga/go-real-world-example/internal/middleware
@@ -193,28 +217,61 @@ The frontend is built with Next.js and chadcn UI. To work on the frontend:
 
 ### Building and Embedding the Frontend
 
-To build the frontend and embed it in the backend binary:
+The project uses Go's generate feature to automate the frontend build process. The main.go file contains the following directives:
 
-1. Build the frontend:
+```go
+//go:generate npm ci --prefix frontend
+//go:generate npm run build --prefix frontend
+```
+
+These directives ensure that when you run `go generate`, it will:
+1. Install the frontend dependencies using `npm ci` (clean install)
+2. Build the frontend using `npm run build`
+
+The built frontend is then embedded in the Go binary using the `embed` package:
+
+```go
+//go:embed frontend/dist/*
+var frontendFS embed.FS
+```
+
+To build the complete application with the embedded frontend:
+
+1. Run the generate commands:
    ```
-   cd frontend
-   npm run build
+   go generate
    ```
-   This will create a static export in the `frontend/dist` directory.
 
-2. Update the main.go file to embed and serve the frontend (see the frontend/README.md for detailed instructions).
-
-3. Build the backend:
+2. Build the backend:
    ```
    go build
    ```
+
+The server includes a custom file server handler that sets the correct MIME types for different file extensions, ensuring that CSS, JavaScript, and other static files are served correctly.
 
 ### Regenerating API Code
 
 If you make changes to the OpenAPI specification, you can regenerate the API code using:
 ```
-go generate ./...
+go generate ./api
 ```
+
+This will run the oapi-codegen tool to generate the Go code from the OpenAPI specification.
+
+### Complete Build Process
+
+To perform a complete build of the project, including frontend dependencies, frontend build, API code generation, and Go binary:
+
+```
+go generate ./...
+go build
+```
+
+This will:
+1. Install frontend dependencies (npm ci)
+2. Build the frontend (npm run build)
+3. Generate API code from OpenAPI spec
+4. Build the Go binary with embedded frontend
 
 ## License
 

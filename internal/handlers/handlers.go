@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"git.homelab.lan/denga/go-real-world-example/api"
-	"git.homelab.lan/denga/go-real-world-example/internal/auth"
-	"git.homelab.lan/denga/go-real-world-example/internal/db"
-	"git.homelab.lan/denga/go-real-world-example/internal/middleware"
-	"git.homelab.lan/denga/go-real-world-example/internal/util"
+	"github.com/denga/go-real-world-example/api"
+	"github.com/denga/go-real-world-example/internal/auth"
+	"github.com/denga/go-real-world-example/internal/db"
+	"github.com/denga/go-real-world-example/internal/middleware"
+	"github.com/denga/go-real-world-example/internal/util"
 )
 
 // Handler implements the ServerInterface from the generated API code
