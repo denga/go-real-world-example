@@ -67,6 +67,27 @@ go run main.go
 
 The server will start on port 8080 by default. You can change the port by setting the `PORT` environment variable.
 
+### Running Tests
+
+To run all tests:
+```
+go test git.homelab.lan/denga/go-real-world-example/internal/...
+```
+
+To run tests for a specific package:
+```
+go test git.homelab.lan/denga/go-real-world-example/internal/util
+go test git.homelab.lan/denga/go-real-world-example/internal/auth
+go test git.homelab.lan/denga/go-real-world-example/internal/db
+go test git.homelab.lan/denga/go-real-world-example/internal/middleware
+go test git.homelab.lan/denga/go-real-world-example/internal/handlers
+```
+
+To run tests with verbose output:
+```
+go test -v git.homelab.lan/denga/go-real-world-example/internal/...
+```
+
 ### API Documentation
 
 The OpenAPI specification is available at `/openapi.yml` when the server is running. You can use tools like [Swagger UI](https://swagger.io/tools/swagger-ui/) to explore the API.

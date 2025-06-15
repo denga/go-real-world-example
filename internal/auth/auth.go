@@ -100,6 +100,11 @@ func ExtractTokenFromRequest(r *http.Request) (string, error) {
 		return "", ErrInvalidToken
 	}
 
+	// Check if the token is empty
+	if parts[1] == "" {
+		return "", ErrInvalidToken
+	}
+
 	return parts[1], nil
 }
 
