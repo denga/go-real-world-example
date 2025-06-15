@@ -22,7 +22,7 @@ import (
 //go:embed openapi.yml
 var openAPISpec embed.FS
 
-//go:embed frontend/dist
+//go:embed frontend/dist/*
 var frontendFS embed.FS
 
 func main() {
