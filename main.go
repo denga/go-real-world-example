@@ -3,15 +3,14 @@ package main
 import (
 	"embed"
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-
 	"git.homelab.lan/denga/go-real-world-example/api"
 	"git.homelab.lan/denga/go-real-world-example/internal/auth"
 	"git.homelab.lan/denga/go-real-world-example/internal/db"
 	"git.homelab.lan/denga/go-real-world-example/internal/handlers"
 	"git.homelab.lan/denga/go-real-world-example/internal/middleware"
+	"log"
+	"net/http"
+	"os"
 
 	"github.com/go-chi/chi/v5"
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
@@ -20,6 +19,9 @@ import (
 
 //go:embed openapi.yml
 var openAPISpec embed.FS
+
+//go:embed frontend/dist
+var frontendFS embed.FS
 
 func main() {
 	// Create a new router

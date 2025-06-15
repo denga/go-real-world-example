@@ -1,9 +1,10 @@
 # Go Real World Example
 
-This project is a real-world example of a RESTful API implementation in Go, following the [RealWorld](https://github.com/gothinkster/realworld) API specification. It demonstrates how to build a backend application using modern Go practices and libraries.
+This project is a real-world example of a RESTful API implementation in Go, following the [RealWorld](https://github.com/gothinkster/realworld) API specification. It demonstrates how to build a backend application using modern Go practices and libraries, along with a modern frontend using Next.js and chadcn UI.
 
 ## Features
 
+### Backend
 - RESTful API implementation based on the RealWorld API specification
 - Built with the [Chi](https://github.com/go-chi/chi) router for HTTP routing
 - API code generation using [oapi-codegen](https://github.com/deepmap/oapi-codegen)
@@ -13,6 +14,13 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 - Password hashing with bcrypt
 - Middleware for request authentication
 
+### Frontend
+- Built with [Next.js](https://nextjs.org/) and [chadcn UI](https://ui.shadcn.com/)
+- Dark mode support
+- Mobile responsive design
+- Integration with backend API
+- Static export that can be embedded in the backend binary
+
 ## Project Structure
 
 ```
@@ -21,6 +29,16 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 │   ├── api.gen.go        # Generated API code
 │   ├── config.yaml       # Configuration for oapi-codegen
 │   └── gen.go            # Go generate directive
+├── frontend/             # Frontend application
+│   ├── app/              # Next.js app directory
+│   ├── components/       # React components
+│   │   ├── theme-provider.tsx  # Dark mode provider
+│   │   ├── theme-toggle.tsx    # Dark mode toggle
+│   │   └── ui/           # UI components from shadcn/ui
+│   ├── lib/              # Utility functions and API client
+│   ├── public/           # Static assets
+│   ├── next.config.ts    # Next.js configuration
+│   └── package.json      # Frontend dependencies
 ├── internal/             # Internal application code
 │   ├── auth/             # Authentication functionality
 │   │   └── auth.go       # JWT token generation and validation
@@ -41,7 +59,12 @@ This project is a real-world example of a RESTful API implementation in Go, foll
 
 ## Requirements
 
+### Backend
 - Go 1.24 or later
+
+### Frontend
+- Node.js 18.0.0 or later
+- npm 9.0.0 or later
 
 ## Getting Started
 
@@ -146,6 +169,45 @@ The API uses JWT tokens for authentication. To authenticate, you need to:
    ```
 
 ## Development
+
+### Frontend Development
+
+The frontend is built with Next.js and chadcn UI. To work on the frontend:
+
+1. Navigate to the frontend directory:
+   ```
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Start the development server:
+   ```
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the frontend.
+
+### Building and Embedding the Frontend
+
+To build the frontend and embed it in the backend binary:
+
+1. Build the frontend:
+   ```
+   cd frontend
+   npm run build
+   ```
+   This will create a static export in the `frontend/dist` directory.
+
+2. Update the main.go file to embed and serve the frontend (see the frontend/README.md for detailed instructions).
+
+3. Build the backend:
+   ```
+   go build
+   ```
 
 ### Regenerating API Code
 
