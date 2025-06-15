@@ -88,6 +88,12 @@ To run tests with verbose output:
 go test -v git.homelab.lan/denga/go-real-world-example/internal/...
 ```
 
+### Continuous Integration
+
+This project uses Gitea Actions for continuous integration. The CI workflow automatically runs tests on push to the main branch and on pull requests.
+
+You can see the CI workflow configuration in the `.gitea/workflows/go-test.yml` file.
+
 ### API Documentation
 
 The OpenAPI specification is available at `/openapi.yml` when the server is running. You can use tools like [Swagger UI](https://swagger.io/tools/swagger-ui/) to explore the API.
