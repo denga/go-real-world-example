@@ -44,17 +44,8 @@ func main() {
 		MaxAge:           300,
 	}))
 
-	// Create auth config
-	authConfig := auth.DefaultConfig()
-
-	// Create a separate router for API routes
-	apiRouter := chi.NewRouter()
-
-	// Add auth middleware only to API routes
-	apiRouter.Use(middleware.Auth(authConfig))
-
 	// Serve the OpenAPI spec
-	apiRouter.Get("/openapi.yml", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/openapi.yml", func(w http.ResponseWriter, r *http.Request) {
 		specBytes, err := openAPISpec.ReadFile("openapi.yml")
 		if err != nil {
 			http.Error(w, "Could not read OpenAPI spec", http.StatusInternalServerError)
@@ -63,6 +54,15 @@ func main() {
 		w.Header().Set("Content-Type", "application/yaml")
 		w.Write(specBytes)
 	})
+
+	// Create auth config
+	authConfig := auth.DefaultConfig()
+
+	// Create a separate router for API routes
+	apiRouter := chi.NewRouter()
+
+	// Add auth middleware only to API routes
+	apiRouter.Use(middleware.Auth(authConfig))
 
 	// Initialize in-memory database
 	db := db.NewInMemoryDB()

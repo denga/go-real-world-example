@@ -1,8 +1,6 @@
-output-options:
-  package: api
-  output: api.gen.go
+package: api
+output: api.gen.go
 generate:
-  echo-server: false
   chi-server: true
   models: true
   embedded-spec: true

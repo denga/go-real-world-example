@@ -1,15 +1,13 @@
 # Go Real World Example
 
-This project is a real-world example of a RESTful API implementation in Go, following the [RealWorld](https://github.com/gothinkster/realworld) API specification. It demonstrates how to build a backend application using modern Go practices and libraries, along with a modern frontend using Next.js and chadcn UI.
-
-The application is a Medium.com clone called "Conduit" that allows users to create articles, follow authors, and favorite articles. The backend serves the API endpoints and also embeds and serves the frontend static files.
+This project is a real-world example of a RESTful API implementation in Go, following the [RealWorld](https://github.com/gothinkster/realworld) API specification. It implements the [RealWorld OpenAPI specification](https://github.com/gothinkster/realworld/blob/main/api/openapi.yml) to create a Medium.com clone called "Conduit" that allows users to create articles, follow authors, and favorite articles. It demonstrates how to build a backend application using modern Go practices and libraries, along with a modern frontend using Next.js and chadcn UI. The backend serves the API endpoints and also embeds and serves the frontend static files.
 
 ## Features
 
 ### Backend
 - RESTful API implementation based on the RealWorld API specification
 - Built with the [Chi](https://github.com/go-chi/chi) router for HTTP routing
-- API code generation using [oapi-codegen](https://github.com/deepmap/oapi-codegen)
+- API code generation using [oapi-codegen](https://github.com/deepmap/oapi-codegen) (Note: The project is configured to use both the original deepmap/oapi-codegen and the newer oapi-codegen/oapi-codegen/v2)
 - JWT-based authentication system
 - In-memory database for data storage
 - OpenAPI specification embedded in the binary
@@ -17,11 +15,11 @@ The application is a Medium.com clone called "Conduit" that allows users to crea
 - Middleware for request authentication
 
 ### Frontend
-- Built with [Next.js](https://nextjs.org/) and [chadcn UI](https://ui.shadcn.com/)
+- Built with [Next.js](https://nextjs.org/) 15.3.3 and [chadcn UI](https://ui.shadcn.com/), using React 19.0.0
 - Dark mode support with theme toggle
 - Mobile responsive design
 - Integration with backend API
-- Static export that can be embedded in the backend binary
+- Static export that can be embedded in the backend binary (configured with `output: 'export'`, `distDir: 'dist'`, and unoptimized images)
 - Client-side authentication with JWT tokens stored in localStorage
 - React context for managing authentication state
 - Complete routing implementation:
@@ -272,6 +270,36 @@ This will:
 2. Build the frontend (npm run build)
 3. Generate API code from OpenAPI spec
 4. Build the Go binary with embedded frontend
+
+## Docker
+
+The project includes a Dockerfile for building and running the application in a container.
+
+### Building the Docker Image
+
+To build the Docker image:
+
+```
+docker build -t go-real-world-example .
+```
+
+### Running the Docker Container
+
+To run the container:
+
+```
+docker run -p 8080:8080 go-real-world-example
+```
+
+This will start the application and make it available at http://localhost:8080.
+
+### Environment Variables
+
+You can configure the application using environment variables:
+
+```
+docker run -p 8080:8080 -e PORT=8080 go-real-world-example
+```
 
 ## License
 
