@@ -1,0 +1,4 @@
+- We want to implement a real world example in go with the chi framework and oapi-codegen
+- The open api definition can be found under https://github.com/gothinkster/realworld/blob/main/api/openapi.yml and should be placed in the local project folder
+- The openapi spec should be embedded in the binary 
+- As a datasource we use an simple in memory database
