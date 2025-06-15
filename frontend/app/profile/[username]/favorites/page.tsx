@@ -1,9 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export default function ProfileFavoritesPage({ params }: { params: { username: string } }) {
+// This function is required for static site generation with dynamic routes
+export async function generateStaticParams() {
+  // In a real app, we would fetch all usernames from an API or database
+  // For now, we'll return a few mock usernames
+  return [
+    { username: 'johndoe' },
+    { username: 'janedoe' },
+    { username: 'alexsmith' }
+  ];
+}
+
+export default async function ProfileFavoritesPage({ params }: { params: Promise<{ username: string }> }) {
   // In a real app, we would fetch the profile data based on the username
+  const resolvedParams = await params;
   const mockProfile = {
-    username: params.username,
+    username: resolvedParams.username,
     bio: "I work at statefarm",
     image: "https://via.placeholder.com/100",
     following: false
@@ -43,9 +56,11 @@ export default function ProfileFavoritesPage({ params }: { params: { username: s
     <div className="container mx-auto px-4 py-8">
       {/* Profile header */}
       <div className="bg-muted py-8 px-4 rounded-lg mb-8 text-center">
-        <img 
+        <Image 
           src={mockProfile.image} 
           alt={mockProfile.username}
+          width={96}
+          height={96}
           className="w-24 h-24 rounded-full mx-auto mb-4"
         />
         <h1 className="text-2xl font-bold mb-2">{mockProfile.username}</h1>
@@ -59,13 +74,13 @@ export default function ProfileFavoritesPage({ params }: { params: { username: s
       <div className="border-b mb-6">
         <div className="flex space-x-6">
           <Link 
-            href={`/profile/${params.username}`}
+            href={`/profile/${resolvedParams.username}`}
             className="py-2 text-muted-foreground"
           >
             My Articles
           </Link>
           <Link 
-            href={`/profile/${params.username}/favorites`}
+            href={`/profile/${resolvedParams.username}/favorites`}
             className="py-2 border-b-2 border-primary font-medium"
           >
             Favorited Articles
@@ -79,9 +94,11 @@ export default function ProfileFavoritesPage({ params }: { params: { username: s
           <div key={article.slug} className="border rounded-lg p-6">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center">
-                <img 
+                <Image 
                   src={article.author.image} 
                   alt={article.author.username}
+                  width={40}
+                  height={40}
                   className="w-10 h-10 rounded-full mr-2"
                 />
                 <div>

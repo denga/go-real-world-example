@@ -1,6 +1,19 @@
-export default function EditArticlePage({ params }: { params: { slug: string } }) {
+// This function is required for static site generation with dynamic routes
+export async function generateStaticParams() {
+  // In a real app, we would fetch all article slugs from an API or database
+  // For now, we'll return a few mock slugs
+  return [
+    { slug: 'how-to-use-react-hooks' },
+    { slug: 'getting-started-with-golang' },
+    { slug: 'nextjs-app-router' }
+  ];
+}
+
+export default async function EditArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   // In a real app, we would fetch the article data based on the slug
+  const resolvedParams = await params;
   const mockArticle = {
+    slug: resolvedParams.slug, // Using the slug from the URL params
     title: "Example Article",
     description: "This is an example article",
     body: "# Example Article\n\nThis is the body of the example article in markdown format.\n\n## Section 1\n\nSome content here.\n\n## Section 2\n\nMore content here.",
@@ -10,7 +23,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <h1 className="text-2xl font-bold mb-8">Edit Article</h1>
-      
+
       <form className="space-y-6">
         <div className="space-y-2">
           <input
@@ -21,7 +34,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
             required
           />
         </div>
-        
+
         <div className="space-y-2">
           <input
             type="text"
@@ -31,7 +44,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
             required
           />
         </div>
-        
+
         <div className="space-y-2">
           <textarea
             placeholder="Write your article (in markdown)"
@@ -40,7 +53,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
             required
           ></textarea>
         </div>
-        
+
         <div className="space-y-2">
           <input
             type="text"
@@ -49,7 +62,7 @@ export default function EditArticlePage({ params }: { params: { slug: string } }
             defaultValue={mockArticle.tagList.join(', ')}
           />
         </div>
-        
+
         <div className="flex justify-end space-x-4">
           <button
             type="button"

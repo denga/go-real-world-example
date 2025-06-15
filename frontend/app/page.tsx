@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   // Mock data for demonstration
@@ -68,9 +69,11 @@ export default function Home() {
               <div key={article.slug} className="border rounded-lg p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center">
-                    <img 
+                    <Image 
                       src={article.author.image} 
                       alt={article.author.username}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full mr-2"
                     />
                     <div>

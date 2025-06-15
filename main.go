@@ -8,9 +8,11 @@ import (
 	"git.homelab.lan/denga/go-real-world-example/internal/db"
 	"git.homelab.lan/denga/go-real-world-example/internal/handlers"
 	"git.homelab.lan/denga/go-real-world-example/internal/middleware"
+	iofs "io/fs"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
@@ -42,11 +44,14 @@ func main() {
 	// Create auth config
 	authConfig := auth.DefaultConfig()
 
-	// Add auth middleware
-	r.Use(middleware.Auth(authConfig))
+	// Create a separate router for API routes
+	apiRouter := chi.NewRouter()
+
+	// Add auth middleware only to API routes
+	apiRouter.Use(middleware.Auth(authConfig))
 
 	// Serve the OpenAPI spec
-	r.Get("/openapi.yml", func(w http.ResponseWriter, r *http.Request) {
+	apiRouter.Get("/openapi.yml", func(w http.ResponseWriter, r *http.Request) {
 		specBytes, err := openAPISpec.ReadFile("openapi.yml")
 		if err != nil {
 			http.Error(w, "Could not read OpenAPI spec", http.StatusInternalServerError)
@@ -63,10 +68,45 @@ func main() {
 	handler := handlers.NewHandler(db, authConfig)
 
 	// Register API handlers
-	apiHandler := api.HandlerFromMux(handler, r)
+	apiHandler := api.HandlerFromMux(handler, apiRouter)
 
-	// Mount the API handler
-	r.Mount("/", apiHandler)
+	// Mount the API handler to the main router without additional wrapping
+	r.Mount("/api", apiHandler)
+
+	// Serve the embedded frontend files
+	frontendRoot, err := iofs.Sub(frontendFS, "frontend/dist")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Create a custom file server with correct MIME types
+	fileServer := http.FileServer(http.FS(frontendRoot))
+
+	// Create a handler that sets the correct MIME types
+	fileServerWithMIME := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set correct MIME types based on file extension
+		if strings.HasSuffix(r.URL.Path, ".css") {
+			w.Header().Set("Content-Type", "text/css")
+		} else if strings.HasSuffix(r.URL.Path, ".js") {
+			w.Header().Set("Content-Type", "application/javascript")
+		} else if strings.HasSuffix(r.URL.Path, ".json") {
+			w.Header().Set("Content-Type", "application/json")
+		} else if strings.HasSuffix(r.URL.Path, ".svg") {
+			w.Header().Set("Content-Type", "image/svg+xml")
+		} else if strings.HasSuffix(r.URL.Path, ".png") {
+			w.Header().Set("Content-Type", "image/png")
+		} else if strings.HasSuffix(r.URL.Path, ".jpg") || strings.HasSuffix(r.URL.Path, ".jpeg") {
+			w.Header().Set("Content-Type", "image/jpeg")
+		} else if strings.HasSuffix(r.URL.Path, ".woff2") {
+			w.Header().Set("Content-Type", "font/woff2")
+		} else if strings.HasSuffix(r.URL.Path, ".woff") {
+			w.Header().Set("Content-Type", "font/woff")
+		}
+		fileServer.ServeHTTP(w, r)
+	})
+
+	// Serve all files with proper MIME types
+	r.Handle("/*", fileServerWithMIME)
 
 	// Determine port for HTTP service
 	port := os.Getenv("PORT")

@@ -1,9 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
+// This function is required for static site generation with dynamic routes
+export async function generateStaticParams() {
+  // In a real app, we would fetch all article slugs from an API or database
+  // For now, we'll return a few mock slugs
+  return [
+    { slug: 'how-to-use-react-hooks' },
+    { slug: 'getting-started-with-golang' },
+    { slug: 'nextjs-app-router' }
+  ];
+}
+
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   // In a real app, we would fetch the article data based on the slug
+  const resolvedParams = await params;
   const mockArticle = {
-    slug: params.slug,
+    slug: resolvedParams.slug,
     title: "Example Article",
     description: "This is an example article",
     body: "# Example Article\n\nThis is the body of the example article in markdown format.\n\n## Section 1\n\nSome content here.\n\n## Section 2\n\nMore content here.",
@@ -48,7 +61,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold my-3">$1</h2>')
       .replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold my-2">$1</h3>')
       .replace(/\n/g, '<br />');
-    
+
     return <div dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
@@ -58,9 +71,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <div className="bg-muted py-8 px-4 rounded-lg mb-8">
         <h1 className="text-3xl font-bold mb-4">{mockArticle.title}</h1>
         <div className="flex items-center mb-4">
-          <img 
+          <Image 
             src={mockArticle.author.image} 
             alt={mockArticle.author.username}
+            width={40}
+            height={40}
             className="w-10 h-10 rounded-full mr-2"
           />
           <div>
@@ -115,7 +130,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       {/* Comments section */}
       <div className="max-w-3xl mx-auto">
         <h3 className="text-xl font-bold mb-4">Comments</h3>
-        
+
         {/* Comment form */}
         <div className="border rounded-lg p-4 mb-6">
           <textarea
@@ -128,7 +143,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             </button>
           </div>
         </div>
-        
+
         {/* Comments list */}
         <div className="space-y-4">
           {mockComments.map((comment) => (
@@ -136,9 +151,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <p className="mb-4">{comment.body}</p>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <img 
+                  <Image 
                     src={comment.author.image} 
                     alt={comment.author.username}
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-full mr-2"
                   />
                   <div>
